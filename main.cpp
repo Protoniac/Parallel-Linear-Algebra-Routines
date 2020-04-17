@@ -19,6 +19,19 @@ int main(int argc, char *argv[]){
     MPI_Comm_size(MPI_COMM_WORLD,&nbProcess);
     MPI_Comm_rank(MPI_COMM_WORLD,&rank);
     
+    if((int)sqrt(nbProcess)*(int)sqrt(nbProcess) != nbProcess){
+        if(rank == 0){
+            std::cerr << "The square root of the number of thread given as parameter is not a natural number" << std::endl;
+        }    
+        return -1;
+    }
+    if((int)sqrt(nbProcess) > nrowA || (int)sqrt(nbProcess) > ncolA || (int)sqrt(nbProcess) > ncolB ){
+        if(rank == 0){
+            std::cerr << "Number of thread given as parameter too big for matrices dimensions" << std::endl;
+        }    
+        return -1;
+    }
+    
     if(rank == 0){
         
         A = init_contiguous_matrix(nrowA,ncolA);
@@ -48,13 +61,21 @@ int main(int argc, char *argv[]){
     
     if(rank == 0){
         
-//         print_matrix(AB_gathered,nrowA,ncolB);
-        AB = matrix_multiplication(A,B,nrowA,ncolA,ncolB);
-//         print_matrix(AB,nrowA,ncolB);
-        
-        std::cout << "Elapsed Time : "
+        std::cout << "Parrallel Block Matrices Multiplication \n" << "Elapsed Time : "
         << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count()
         << " ms. " << std::endl;
+        
+//         print_matrix(AB_gathered,nrowA,ncolB);
+        
+        start = std::chrono::steady_clock::now();
+        AB = matrix_multiplication(A,B,nrowA,ncolA,ncolB);
+        end = std::chrono::steady_clock::now();
+        
+        std::cout << "Basic Matrices Multiplication \n" << "Elapsed Time : "
+        << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count()
+        << " ms. " << std::endl;
+        
+//         print_matrix(AB,nrowA,ncolB);
         
         clean_contiguous_matrix(A,nrowA,ncolA);
         clean_contiguous_matrix(B,ncolA,ncolB);
