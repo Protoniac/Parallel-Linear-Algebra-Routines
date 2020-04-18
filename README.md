@@ -13,7 +13,7 @@ In each thread will be allocated a corresponding part of *A* and *B* called *A_b
 
 The tasks given to the different thread must be well balanced to achieve good performances. Indeed, having only one thread doing all the job is the same as runing the code on a single thread. The decomposition in blocks depends on the number of thread given as parameter, and need to be thought considering a good balance between the different thread.
 
-A good method for that is to compute the euclidian division of matrices' number of row by the number of block placed on a row. The remainder should be distributed accross blocks starting from the first block on the left hand corner. For example, let the number of thread fixed to 4, and a matrix 5x5 to be scattered in blocks. Now let the number of block per row to 2. The euclian division of 5 by 2 is 2 with a remainder egal to 1. Each blocks placed on rows will receive 2 columns, and the remainder will be attributed to the first block. The process is strictly for columns.
+A good method for that is to compute the euclidian division of matrices' number of row by the number of block placed on a row. The remainder should be distributed accross blocks starting from the first block on the left hand corner. For example, let the number of thread fixed to 4, and a matrix 5x5 to be scattered in blocks. Now let the number of block per row to 2. The euclian division of 5 by 2 is 2 with a remainder egal to 1. Each blocks placed on rows will receive 2 columns, and the remainder will be attributed to the first block. The process is strictly the same for columns.
 
 Here is an illustration of this process :
 <img src="images/22x22.png"/>
