@@ -51,8 +51,8 @@ So my compromise was to work with a number of thread having an natural square ro
     
     //Initialization of rows and columns communicators
     
-    int ncolBlockAnrowBlockB_temp; /
-    *The number of columns and rows of the different A_blocks and B_blocks passed and recevied can 
+    int ncolBlockAnrowBlockB_temp;
+    /*The number of columns and rows of the different A_blocks and B_blocks passed and recevied can 
     vary according to the position of blocks*/
     
     double **A_block_temp;
