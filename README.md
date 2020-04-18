@@ -3,12 +3,28 @@ In this repository are some tools for parallel linear algebra routines using bot
 
 ## Parallel Block Matrices Multiplication
 
+Multiplication of two matrices A and B by scattering them in multiples block matrices are well suited for parallelism.
+
+Below is explained the different step of this method : 
+
+#### 1) Scatter Matrices A and B into multiple blocks
+
+In each thread will be allocated a corresponding part of *A* and *B* called *A_block* and *B_block*, respectively, following the thread's *rank*. The game of this first step is to find the perfect way to scatter *A* and *B* in blocks, following their row and column dimensions.
+
+#### 2) Compute each block 
+
+In coming ...
+
+#### 3) Gather the computed blocks into the final matrix AB
+
+In coming ...
+
 ### Prerequisites
 * MPIC++
 * MPIEXEC
 * Electricity
 
-### Install MPI on Ubuntu
+### Install MPI on Ubuntu / Debian
 
 ```shell
 sudo apt install mpich
