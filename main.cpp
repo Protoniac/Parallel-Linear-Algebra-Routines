@@ -61,7 +61,7 @@ int main(int argc, char *argv[]){
     
     if(rank == 0){
         
-        std::cout << "Parrallel Block Matrices Multiplication \n" << "Elapsed Time : "
+        std::cout << "Parallel Block Matrices Multiplication \n" << "Elapsed Time : "
         << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count()
         << " ms. " << std::endl;
         

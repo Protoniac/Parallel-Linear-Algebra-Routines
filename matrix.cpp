@@ -220,9 +220,9 @@ double ** parallel_matrix_multiplication(double **A_block,double **B_block,int n
                     }
                 }
             }
-        }
         clean_contiguous_matrix(A_block_temp,nrowBlockA,ncolBlockAnrowBlockB_temp);
         clean_contiguous_matrix(B_block_temp,ncolBlockAnrowBlockB_temp,ncolBlockB);
+    }
     
     return AB_block;
 }
