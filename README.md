@@ -31,11 +31,11 @@ This problem is illustrated below :
 <p align='center'>
 <img src="images/23x32.png"/>
 </p>
-This is particulary inconvenient for creating good communicators with MPI. 
 
-While communicators are easy to design in the case where the square root of the number of threads is an integer, I found this situation particularly hard to handle at this point.
+<p align='justify'>
+This is particulary inconvenient for creating good communicators with MPI. While row and column communicators are easy to design  with <i>MPI_Comm_split</i> in the case where the square root of the number of threads is an integer, I found this situation particularly hard to handle at this point. For instance, if 6 threads are allocated, any matrices should be scatterd in 2x3 or 3x2 blocks. As shown in the previous picture, the resulting matrix <i>AB</i> from the multiplication would automatically be a matrix scattered in 2x2 = 4 or 3x3 = 9 blocks. Since 6 blocks have been allocated, it seems better to choose the 2x2 blocks configuration, since only 6 threads are avaiable. Then only 4 threads will need to storage AB's blocks, but the question is : which ones ? For now, I haven't find any good configurations which would have perimitted me to design appropriate communicators, whereas it would have been easier to do if the number of blocks in <i>AB</i> is egal to the number of blocks in <i>A</i> or <i>B</i>! The communicators colors would have been rows and columns in that case. So my compromise, for now, is to work with a number of thread having an natural square root such as 4,9,16,25,etc, permiting me to scatters matrices with the same number of blocks by row and column, involving the same number of blocks in <i>AB</i> and <i>A</i> and <i>B</i>, allowing the creation of appropriate communicators, by row and by column.
+</p>
 
-So my compromise was to work with a number of thread having an natural square root such as 4,9,16,25,etc.
 
 
 #### 2) Compute each block 
