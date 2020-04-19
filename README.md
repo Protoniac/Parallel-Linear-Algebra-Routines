@@ -8,24 +8,29 @@ Multiplication of two matrices A and B by scattering them in multiples block mat
 Below is explained the different step of this method : 
 
 #### 1) Scatter Matrices A and B into multiple blocks
-
-In each thread will be allocated a corresponding part of *A* and *B* called *A_block* and *B_block*, respectively, according to the thread's *rank*. The game of this first step is to find the perfect maner to scatter *A* and *B* in blocks, following their row and column dimensions.
-
+<p align='justify'>
+    In each thread will be allocated a corresponding part of <i>A</i> and <i>B</i> called <i>A_block</i> and <i>B_block</i>, respectively, according to the thread's <i>rank</i>. The game of this first step is to find the perfect maner to scatter <i>A</i> and <i>B</i> in blocks, following their row and column dimensions.
+</p>
+<p align='justify'>
 The tasks given to the different thread must be well balanced to achieve good performances. Indeed, having only one thread doing all the job is the same as runing the code on a single thread. The decomposition in blocks depends on the number of thread given as parameter, and need to be thought considering a good balance between the different thread.
-
+</p>
+<p align='justify'>
 A good method for that is to compute the euclidian division of matrices' number of row by the number of block placed on a row. The remainder should be distributed accross blocks starting from the first block on the left hand corner. For example, let the number of thread fixed to 4, and a matrix 5x5 to be scattered in blocks. Now let the number of block per row to 2. The euclian division of 5 by 2 is 2 with a remainder egal to 1. Each blocks placed on rows will receive 2 columns, and the remainder will be attributed to the first block. The process is strictly the same for columns.
-
+</p>
 Here is an illustration of this process :
+<p align='center'>
 <img src="images/22x22.png"/>
-
-Since matrices multiplication of *A* and *B* involves that the number of column of *A* is egal to the number of row of *A*, the number of block per column in *A* should be egal to the number of block per row in *B*.
-
-An issue occurs when the square root of the number of thread is not a natural number. In that case, the number of block per row and colmun are not egals. Since the number of block per column in *A* should be egal to the number of block per row in *B*, the number of block of the final matrix *AB* is different to the number thread allocated.
-
+</p>
+<p align='justify'>
+Since matrices multiplication of <i>A</i> and <i>B</i> involves that the number of column of <i>A</i> is egal to the number of row of <i>B</i>, the number of block per column in <i>A</i> should be egal to the number of block per row in <i>B</i>.
+</p>
+<p align='justify'>
+An issue occurs when the square root of the number of thread is not a natural number. In that case, the number of block per row and colmun are not egals. Since the number of block per column in <i>A</i> should be egal to the number of block per row in <i>B</i>, the number of block of the final matrix <i>AB</i> is different to the number thread allocated.
+</p>
 This problem is illustrated below : 
-
+<p align='center'>
 <img src="images/23x32.png"/>
-
+</p>
 This is particulary inconvenient for creating good communicators with MPI. 
 
 While communicators are easy to design in the case where the square root of the number of threads is an integer, I found this situation particularly hard to handle at this point.
